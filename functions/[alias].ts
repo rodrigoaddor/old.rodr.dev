@@ -1,17 +1,23 @@
 type AliasFunction = PagesFunction<Env, 'alias', { alias: string }>;
 type AliasContext = Parameters<AliasFunction>[0];
 
+const isAuthorized = ({ env: { ADMIN_TOKEN }, request: { headers } }: AliasContext): boolean => {
+	const token = headers.get('Authorization')?.split(' ')[1];
+	console.log({ token });
+	return token === ADMIN_TOKEN;
+};
+
 const handlers: Record<string, (context: AliasContext) => Promise<Response>> = {
 	GET: async (context: AliasContext) => {
-		const { env, data } = context;
+		const { env, data, request } = context;
 
-		const target = await env.aliases.get(data.alias);
+		const target = await env.ALIASES.get(data.alias);
 
 		if (target === null) {
 			return new Response(null, {
 				status: 404,
 				headers: {
-					Location: env.BASE_URL
+					Location: new URL(request.url).origin
 				}
 			});
 		}
@@ -27,7 +33,7 @@ const handlers: Record<string, (context: AliasContext) => Promise<Response>> = {
 	HEAD: async (context: AliasContext) => {
 		const { env, data } = context;
 
-		const target = await env.aliases.get(data.alias);
+		const target = await env.ALIASES.get(data.alias);
 		return new Response(null, {
 			status: target === null ? 404 : 302,
 			headers: {
@@ -39,35 +45,35 @@ const handlers: Record<string, (context: AliasContext) => Promise<Response>> = {
 	POST: async (context: AliasContext) => {
 		const { env, data, request } = context;
 
-		const token = request.headers.get('Authorization')?.split(' ')[1];
-		if (token !== env.ADMIN_TOKEN) {
+		console.log('HELLO??');
+
+		if (!isAuthorized(context)) {
 			return new Response(null, {
 				status: 401
 			});
 		}
 
 		const target = await request.text();
-		await env.aliases.put(data.alias, target);
+		await env.ALIASES.put(data.alias, target);
 
 		return new Response(null, {
 			status: 201,
 			headers: {
-				Location: `${env.BASE_URL}/${data.alias}`
+				Location: `${new URL(request.url).origin}/${data.alias}`
 			}
 		});
 	},
 
 	DELETE: async (context: AliasContext) => {
-		const { env, data, request } = context;
+		const { env, data } = context;
 
-		const token = request.headers.get('Authorization')?.split(' ')[1];
-		if (token !== env.ADMIN_TOKEN) {
+		if (!isAuthorized(context)) {
 			return new Response(null, {
 				status: 401
 			});
 		}
 
-		await env.aliases.delete(data.alias);
+		await env.ALIASES.delete(data.alias);
 
 		return new Response(null, {
 			status: 204
@@ -78,6 +84,8 @@ const handlers: Record<string, (context: AliasContext) => Promise<Response>> = {
 export const onRequest: AliasFunction = async (context) => {
 	const { data, params, request } = context;
 	data.alias = Array.isArray(params.alias) ? params.alias[0] : params.alias;
+
+	console.log('incoming!!!');
 
 	if (request.method in handlers) {
 		return handlers[request.method](context);

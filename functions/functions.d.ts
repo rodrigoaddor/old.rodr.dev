@@ -1,6 +1,5 @@
 interface Env {
-	aliases: KVNamespace;
+	ALIASES: KVNamespace;
 
 	ADMIN_TOKEN: string;
-  BASE_URL: string;
 }

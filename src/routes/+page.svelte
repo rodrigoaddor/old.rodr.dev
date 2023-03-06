@@ -1,20 +1,10 @@
 <h1 class="caret"><span class="display">rodr</span>.dev</h1>
 
 <style lang="sass">
-  :global(body)
-    display: grid
-    place-items: center
-    width: 100vw
-    height: 100vh
-    background: #263238
-    color: #FAFAFA
-
-    *:focus-visible
-      outline: none
-  
   h1
     font-family: "Jetbrains Mono", monospace
     font-size: min(4rem, 10vmin)
+    user-select: none
   
   .display
     font-size: 2em

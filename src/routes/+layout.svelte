@@ -1,10 +1,3 @@
-<script lang="ts">
-	export const prerender = true;
-
-	import '@fontsource/jetbrains-mono';
-	import 'normalize.css';
-</script>
-
 <svelte:head>
 	<title>rodr.dev</title>
 </svelte:head>

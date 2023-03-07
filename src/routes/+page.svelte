@@ -132,58 +132,59 @@
 	};
 </script>
 
-<h1 on:click={toggleAnimation}>
+<h1 class="logo" on:click={toggleAnimation}>
 	{@html renderAsHTML(currentText)}
 </h1>
 
 <style lang="sass">
-  @keyframes blinking-caret
-    to
-      visibility: hidden
+	@keyframes blinking-caret
+		to
+			visibility: hidden
 
-  h1
-    font-family: 'Inter', sans-serif
-    display: flex
-    align-items: baseline
-    width: 100%
-    border: 0 solid transparent
-    border-width: 8rem 0
-    justify-content: center
-    font-size: min(6rem, 10vmin)
-    font-weight: 100
-    white-space: pre    
-    user-select: none
+	h1
+		font-family: 'Inter', sans-serif
+		display: flex
+		align-items: baseline
+		width: 100%
+		border: 0 solid transparent
+		border-width: 8rem 0
+		justify-content: center
+		font-size: min(6rem, 10vmin)
+		font-weight: 100
+		white-space: pre    
+		user-select: none
+
+	:global(.logo)
+		:global(span)
+			display: inline-block
+
+		:global(.highlight)
+			font-weight: 700
+			letter-spacing: normal
+
+		:global(.select)
+			background: transparentize(#2196F3, 0.3)
+
+		:global(.caret)
+			position: relative
   
-  :global(.highlight)
-    font-weight: 700
-    letter-spacing: normal
- 
-  :global(.select)
-    background: transparentize(#2196F3, 0.5)
+		:global(.caret:not(.before)::after)
+				content: ""
+				position: absolute
+				background: currentColor
+				bottom: 0
+				right: -.05em
+				width: .02em
+				height: 1.15em
+				animation: blinking-caret 1s steps(2, start) infinite
 
-  :global(.caret)
-    position: relative
-  
-  :global(.caret:not(.before)::after)
-      content: ""
-      position: absolute
-      display: inline-block
-      background: currentColor
-      bottom: 0
-      right: -.05em
-      width: .02em
-      height: 1.32em
-      animation: blinking-caret 1s steps(2, start) infinite
-
-  :global(.caret.before::before)
-    content: ""
-    position: absolute
-    display: inline-block
-    background: currentColor
-    bottom: 0
-    width: .02em
-    height: 1.32em
-    animation: blinking-caret 1s steps(2, start) infinite
-
-
+		:global(.caret.before::before)
+			content: ""
+			position: absolute
+			display: inline-block
+			background: currentColor
+			bottom: 0
+			width: .02em
+			height: 1.15em
+			animation: blinking-caret 1s steps(2, start) infinite
 </style>

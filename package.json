@@ -13,6 +13,7 @@
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20230228.0",
+		"@fontsource/inter": "^4.5.15",
 		"@fontsource/jetbrains-mono": "^4.5.12",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-cloudflare": "^2.2.0",

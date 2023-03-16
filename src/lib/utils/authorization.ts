@@ -7,6 +7,6 @@ export const isAuthorized = ({ platform, request }: Pick<RequestEvent, 'platform
 		throw new Error('No admin token set');
 	}
 
-	const token = request.headers.get('Authorization')?.split(' ')[0];
+	const token = request.headers.get('Authorization')?.split(' ')[1];
 	return token === platform.env.ADMIN_TOKEN;
 };

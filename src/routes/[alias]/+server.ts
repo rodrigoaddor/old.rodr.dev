@@ -25,23 +25,6 @@ export const GET = (async ({ url, params, platform }) => {
 	});
 }) satisfies RequestHandler;
 
-export const HEAD = (async ({ params, platform }) => {
-	if (!platform) throw new Error('Invalid platform');
-	const { env } = platform;
-
-	const target = await env.ALIASES.get(params.alias);
-	if (target === null) {
-		return new Response(null, { status: status.NOT_FOUND });
-	}
-
-	return new Response(null, {
-		status: status.OK,
-		headers: {
-			'X-Location': target
-		}
-	});
-}) satisfies RequestHandler;
-
 export const POST = (async ({ url, params, platform, request }) => {
 	if (!platform) throw new Error('Invalid platform');
 	const { env } = platform;

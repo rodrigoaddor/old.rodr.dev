@@ -24,6 +24,7 @@
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"http-status": "^1.6.2",
+		"miniflare": "^2.12.1",
 		"normalize.css": "^8.0.1",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",

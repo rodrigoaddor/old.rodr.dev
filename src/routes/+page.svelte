@@ -90,6 +90,8 @@
 		]
 	};
 
+	const TRIGGER_KEYS = ['Enter', 'Space'];
+
 	let currentText = steps[$animationState][steps[$animationState].length - 1];
 
 	const renderAsHTML = (text: string) => {
@@ -111,7 +113,7 @@
 	const animate = (direction: AnimationState) => {
 		$animationState = direction;
 		clearInterval(interval);
-		interval = setInterval(() => {
+		interval = window.setInterval(() => {
 			currentStep++;
 			if (currentStep >= steps[direction].length) {
 				currentStep = 0;
@@ -130,9 +132,17 @@
 			animate('forwards');
 		}
 	};
+
+	const handleKey = (e: KeyboardEvent) => {
+		if (TRIGGER_KEYS.includes(e.key)) {
+			e.preventDefault();
+			e.stopPropagation();
+			toggleAnimation();
+		}
+	};
 </script>
 
-<h1 class="logo" on:click={toggleAnimation}>
+<h1 class="logo" on:click={toggleAnimation} on:keydown={handleKey}>
 	{@html renderAsHTML(currentText)}
 </h1>
 

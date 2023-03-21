@@ -152,7 +152,6 @@
 			visibility: hidden
 
 	h1
-		font-family: 'Inter', sans-serif
 		display: flex
 		align-items: baseline
 		width: 100%

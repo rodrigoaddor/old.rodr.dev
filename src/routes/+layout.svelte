@@ -12,6 +12,8 @@
     height: 100vh
     background: #263238
     color: #FAFAFA
+    font-family: 'Inter', sans-serif
+    
 
   *:focus-visible
     outline: none
